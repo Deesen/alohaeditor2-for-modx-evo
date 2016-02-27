@@ -1,0 +1,85 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<link rel="stylesheet" href="[+base_url+]aloha/aloha.css" type="text/css" media="screen" />
+<script>!window.jQuery && document.write(decodeURI('%3Cscript src="/assets/js/jquery.min.js"%3E%3C/script%3E'))</script>
+<script type="text/javascript" src="[+base_url+]aloha/aloha.min.js"></script>
+<script type="text/javascript" src="[+base_url+]aloha/aloha-ui-links.js"></script>
+
+<div class="aloha-ui-wrap">
+    <div class="aloha-ui btn-toolbar" role="toolbar">
+        <ul class="btn-group">
+            <li><button class="aloha-action-bold btn" title="Bold"><b>B</b></button></li>
+            <li><button class="aloha-action-italic btn" title="Italic"><i>I</i></button></li>
+            <li><button class="aloha-action-unformat btn glyphicon glyphicon-remove" title="Remove formatting"></button></li>
+            <li><button class="aloha-action-link btn glyphicon glyphicon-link" title="Create Link"></button></li>
+            <li><button class="aloha-action-ol btn glyphicon glyphicon-list" title="Ordered List"></button></li>
+            <li><button class="aloha-action-ul btn glyphicon glyphicon-list" title="Unordered List"></button></li>
+            <li class="btn">Paragraph <span class="caret"></span>
+                <ul class="sub-menu" role="menu">
+                    <li><a href="#" class="aloha-action-h1">Heading 1</a></li>
+                    <li><a href="#" class="aloha-action-h2">Heading 2</a></li>
+                    <li><a href="#" class="aloha-action-h3">Heading 3</a></li>
+                    <li><a href="#" class="aloha-action-h4">Heading 4</a></li>
+                    <li><a href="#" class="aloha-action-p">Paragraph</a></li>
+                    <li><a href="#" class="aloha-action-pre">Preformatted</a></li>
+                </ul>
+            </li>
+            <li class="btn"><button id="action-save" class="btn glyphicon glyphicon-check" title="Save Ressource">&nbsp;Save</button></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Link Dialog -->
+<div class="aloha-3d aloha-ui">
+    <div class="rainbow-static aloha-link-toolbar btn-toolbar" role="toolbar">
+        <input type="text" name="href" placeholder="http://www.alohaeditor.org" value="">
+        <button class="aloha-action-target btn glyphicon glyphicon-new-window" title="Toggle to open link in new window"></button>
+        <a class="aloha-link-follow btn glyphicon glyphicon-share-alt" href="#" target="_blank" rel="noreferrer" title="Follow this link"></a>
+    </div>
+</div>
+
+<script>
+    (function () {
+        'use strict';
+        var commands = aloha.maps.merge(aloha.linksUi.commands, aloha.ui.commands);
+        var editables = aloha.dom.query('.editable', document).map(aloha);
+        for (var selector in commands) {
+            $('.aloha-action-' + selector)
+                    .on('click', aloha.ui.command(editables, commands[selector]));
+        }
+        function middleware(event) {
+            $('.aloha-ui .active, .aloha-ui.active').removeClass('active');
+            if ('leave' === event.type) {
+                return event;
+            }
+            var states = aloha.ui.states(commands, event);
+            for (var selector in states) {
+                var $item = $('.aloha-action-' + selector).toggleClass('active', states[selector]);
+                if (states[selector] && $item.parents('.dropdown-menu').length) {
+                    $item.closest('.btn-group').find('.dropdown-toggle')
+                            .addClass('active')[0].firstChild.data = $item[0].textContent + ' ';
+                }
+            }
+            return event;
+        }
+        aloha.editor.stack.unshift(aloha.linksUi.middleware, middleware);
+
+        $('#action-save').on('click', function (event) {
+
+            [+configRaw+]
+
+            var saving = $.post( '[+base_url+]connector.save_action.php', data );
+
+            saving.done(function( data ) {
+                if( data == [+documentIdentifier+] ) {
+                    $('#action-save').css('color','#00ff00');
+                    setTimeout(function(){ $('#action-save').css('color','#ffffff') }, 3000);
+                } else {
+                    $('#action-save').css('color','#ff0000');
+                    alert( data );  // Show (PHP-)Errors
+                }
+            });
+
+        });
+
+    }());
+</script>
