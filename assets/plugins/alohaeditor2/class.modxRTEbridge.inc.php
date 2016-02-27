@@ -334,18 +334,24 @@ class modxRTEbridge
         if (isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'manager') {   // Show only when logged in manager
             if(!defined($this->editorKey.'_ADDED_TO_BODY')) {                       // Add only once
 
-                define($this->editorKey.'_ADDED_TO_BODY', 1);
-                $initJs  = "<!-- modxRTEbridge {$this->editorKey} -->\n";
-                $initJs .= $this->getEditorScript();
-                $initJs .= "<!-- modxRTEbridge {$this->editorKey} -->\n";
+                if(!defined($this->editorKey.'_ADDED_TO_BODY')) {
+                    define($this->editorKey . '_ADDED_TO_BODY', 1);
+                    $initJs = "<!-- modxRTEbridge {$this->editorKey} -->\n";
+                    $initJs .= $this->getEditorScript();
+                    $initJs .= "<!-- modxRTEbridge {$this->editorKey} -->\n";
 
-                if (strpos($modx->documentOutput, '</body>') !== false) {
-                    // Append to <body>
-                    $modx->documentOutput = str_replace('</body>', $initJs . "</body>", $modx->documentOutput);
-                } else {
-                    // No <body> - append to source
-                    $modx->documentOutput .= $initJs;
-                }
+                    // @todo: How to avoid caching of plugins on event "OnParseDocument"?
+                    if (strpos($modx->documentOutput, "<!-- modxRTEbridge {$this->editorKey} -->") === false) { // Avoid double init if already cached..
+                        if (strpos($modx->documentOutput, '</body>') !== false) {
+                            // Append to <body>
+                            $modx->documentOutput = str_replace('</body>', $initJs . "</body>", $modx->documentOutput);
+                        } else {
+                            // No <body> - append to source
+                            $modx->documentOutput .= $initJs;
+                        }
+                    };
+
+                };
 
                 // Avoid breaking content / parsing of Modx-placeholders when editing
                 $modx->documentObject['content'] = $this->protectModxPlaceholders( $modx->documentObject['content'] );
