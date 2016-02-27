@@ -1,7 +1,7 @@
 <?php
 //<?php
 /**
- * Aloha-Editor
+ * Aloha-Editor 2
  *
  * Javascript rich text editor
  *
@@ -11,9 +11,9 @@
  * @internal    @properties &editableIds=Editable<br/>Modx-Phs->CSS-IDs (Example: longtitle->#modx_longtitle,
 content->#modx_content);textarea;longtitle->#modx_longtitle,
 content->#modx_content
- * @internal    @events OnWebPagePrerender
+ * @internal    @events OnParseDocument
  * @internal    @modx_category Manager and Admin
- * @internal    @legacy_names Aloha-Editor
+ * @internal    @legacy_names Aloha-Editor 2
  * @internal    @installset base
  *
  * @author Deesen / updated: 27.02.2016
@@ -33,7 +33,7 @@ $e = &$modx->event;
 switch ($e->name) {
 
     // inject JS-init into <body> before tvs, chunks, snippets, etc. are parsed
-    case "OnWebPagePrerender":
+    case "OnParseDocument":
         $rte->addEditorScriptToBody();
         break;
 

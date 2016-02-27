@@ -26,6 +26,6 @@ Manual installation of plugin `assets/plugins/ckeditor4/plugin.ckeditor4.php`:
   - In Modx Manager go to Elements -> Plugins and create new plugin
   - Name it "Aloha Editor 2"
   - Paste content of file `assets/plugins/alohaeditor2/plugin.alohaeditor2.php` into Modx Plugin-Code (remove `//<?php` in first line)
-  - Set system-events `OnWebPagePrerender`
+  - Set system-events `OnParseDocument`
   - Setup as described above
   - Save new plugin
