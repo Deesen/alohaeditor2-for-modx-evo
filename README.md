@@ -1,5 +1,9 @@
 ## Aloha Editor 2.0.0 Alpha for Modx Evo
-Aloha v2 is still in alpha development stage so this plugin has not more to offer than the official demo http://www.alohaeditor.org/demo/aloha-ui/  
+Aloha v2 is still in alpha development stage so this plugin has not more to offer than the official demo http://www.alohaeditor.org/demo/aloha-ui/    
+
+Features:
+  - All Modx-placeholders like `[[snippet]] {{chunk}}` etc get preserved in editing areas to avoid breaking content
+  - Frontpage-toolbar displayed, and saving ressources works only when logged into manager
 
 ------------------------------------------------------------------------------
 
