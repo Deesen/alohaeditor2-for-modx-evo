@@ -3,7 +3,10 @@ Aloha v2 is still in alpha development stage so this plugin has not more to offe
 
 Features:
   - All Modx-placeholders like `[[snippet]] {{chunk}}` etc get preserved in editing areas to avoid breaking content
-  - Frontpage-toolbar displayed, and saving ressources works only when logged into manager
+  - Saving ressources works only when logged into manager
+  
+Todo:
+  - Frontpage-toolbar display only when logged into, avoid caching on OnParseDocument-event
 
 ------------------------------------------------------------------------------
 
